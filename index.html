@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Copilot - Digital Solution Design</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --bg-elevated: #232d42;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --border-color: #2d3a52;
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-dark: linear-gradient(180deg, #0a0f1a 0%, #111827 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-dark);
+            border-bottom: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.375rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .diagram-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* UI Mockup */
+        .mockup-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .mockup-header {
+            background: var(--bg-elevated);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mockup-dot.red { background: #ef4444; }
+        .mockup-dot.yellow { background: #f59e0b; }
+        .mockup-dot.green { background: #10b981; }
+
+        .mockup-title {
+            margin-left: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .mockup-content {
+            padding: 1.5rem;
+        }
+
+        /* Dashboard Mockup */
+        .dashboard-mockup {
+            display: grid;
+            grid-template-columns: 250px 1fr 320px;
+            gap: 1rem;
+            min-height: 500px;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .sidebar-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-area {
+            background: var(--bg-card);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(59, 130, 246, 0.03) 40px,
+                    rgba(59, 130, 246, 0.03) 41px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(59, 130, 246, 0.03) 40px,
+                    rgba(59, 130, 246, 0.03) 41px
+                );
+        }
+
+        .vessel-marker {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .vessel-marker:hover {
+            transform: scale(1.2);
+        }
+
+        .vessel-marker.green { background: var(--accent-green); }
+        .vessel-marker.amber { background: var(--accent-amber); }
+        .vessel-marker.red { background: var(--accent-red); }
+
+        .vessel-marker::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .detail-panel {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vessel-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .vessel-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .vessel-status.ok { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .vessel-status.warning { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .vessel-status.critical { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .fuel-bar {
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .fuel-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .fuel-fill.high { background: var(--accent-green); }
+        .fuel-fill.medium { background: var(--accent-amber); }
+        .fuel-fill.low { background: var(--accent-red); }
+
+        .alert-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            color: var(--accent-amber);
+            margin-top: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Flow Steps */
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 0.25rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-desc {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-secondary);
+        }
+
+        /* Integration Cards */
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .integration-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .integration-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .integration-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .integration-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .integration-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Module Cards */
+        .module-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .module-card.blue::before { background: var(--accent-blue); }
+        .module-card.cyan::before { background: var(--accent-cyan); }
+        .module-card.green::before { background: var(--accent-green); }
+        .module-card.amber::before { background: var(--accent-amber); }
+        .module-card.purple::before { background: var(--accent-purple); }
+        .module-card.red::before { background: var(--accent-red); }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .module-card.blue .module-icon { background: rgba(59, 130, 246, 0.15); }
+        .module-card.cyan .module-icon { background: rgba(6, 182, 212, 0.15); }
+        .module-card.green .module-icon { background: rgba(16, 185, 129, 0.15); }
+        .module-card.amber .module-icon { background: rgba(245, 158, 11, 0.15); }
+        .module-card.purple .module-icon { background: rgba(139, 92, 246, 0.15); }
+        .module-card.red .module-icon { background: rgba(239, 68, 68, 0.15); }
+
+        .module-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .module-features {
+            list-style: none;
+        }
+
+        .module-features li {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            padding: 0.375rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .module-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-comment {
+            color: var(--text-muted);
+        }
+
+        .code-key {
+            color: var(--accent-cyan);
+        }
+
+        .code-value {
+            color: var(--accent-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-mockup {
+                grid-template-columns: 1fr;
+            }
+            
+            .integration-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .integration-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .card, .diagram-container, .mockup-container {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">⚓</div>
+                <span class="logo-text">Operations Copilot</span>
+            </div>
+            <h1>Digital Solution Design</h1>
+            <p class="subtitle">An integrated voyage management system that unifies fragmented data sources into intelligent, actionable decision support for vessel operators.</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#overview">Overview</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#data-flow">Data Flow</a>
+            <a href="#modules">Core Modules</a>
+            <a href="#ui-design">UI Design</a>
+            <a href="#workflows">Workflows</a>
+            <a href="#integration">Integration</a>
+            <a href="#implementation">Implementation</a>
+        </div>
+    </nav>
+
+    <main class="main">
+        <!-- Section 1: Overview -->
+        <section id="overview">
+            <div class="section-header">
+                <div class="section-number">01</div>
+                <h2>Solution Overview</h2>
+                <p class="section-desc">Transforming fragmented maritime operations into unified intelligent decision-making.</p>
+            </div>
+
+            <div class="card">
+                <h3>The Problem We're Solving</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Vessel operators currently navigate a fragmented landscape of five disconnected systems to make a single bunkering decision. This fragmentation leads to manual data extraction, reconciliation errors, missed opportunities, and delayed decisions.
+                </p>
+
+                <div class="integration-grid">
+                    <div class="integration-card">
+                        <div class="integration-icon">🗺️</div>
+                        <div class="integration-name">AIS Map</div>
+                        <div class="integration-type">Position Tracking</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon">📧</div>
+                        <div class="integration-name">Master Emails</div>
+                        <div class="integration-type">Operational Data</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon">📅</div>
+                        <div class="integration-name">IMOS</div>
+                        <div class="integration-type">Voyage Schedule</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon">⛽</div>
+                        <div class="integration-name">Bunker Prices</div>
+                        <div class="integration-type">Market Data</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon">✓</div>
+                        <div class="integration-name">RightShip</div>
+                        <div class="integration-type">Compliance</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Problem Statement Visualization</div>
+                <div class="mermaid">
+flowchart TB
+    subgraph CURRENT["❌ CURRENT STATE - Fragmented"]
+        direction TB
+        AIS1[("🗺️ AIS Map")]
+        EMAIL1[("📧 Master Emails")]
+        IMOS1[("📅 IMOS")]
+        BUNKER1[("⛽ Bunker Prices")]
+        RIGHT1[("✓ RightShip")]
+        
+        OP1(("👤 Operator"))
+        
+        AIS1 -.->|"Manual Check"| OP1
+        EMAIL1 -.->|"Search & Extract"| OP1
+        IMOS1 -.->|"Toggle Tab"| OP1
+        BUNKER1 -.->|"Email Suppliers"| OP1
+        RIGHT1 -.->|"Separate Portal"| OP1
+    end
+
+    subgraph FUTURE["✅ FUTURE STATE - Unified"]
+        direction TB
+        AIS2[("🗺️ AIS")]
+        EMAIL2[("📧 Emails")]
+        IMOS2[("📅 IMOS")]
+        BUNKER2[("⛽ Prices")]
+        RIGHT2[("✓ RightShip")]
+        
+        COPILOT[["🤖 Operations Copilot"]]
+        OP2(("👤 Operator"))
+        
+        AIS2 --> COPILOT
+        EMAIL2 --> COPILOT
+        IMOS2 --> COPILOT
+        BUNKER2 --> COPILOT
+        RIGHT2 --> COPILOT
+        
+        COPILOT ==>|"Unified View + Recommendations"| OP2
+    end
+
+    CURRENT -->|"TRANSFORMATION"| FUTURE
+
+    style CURRENT fill:#1a1a2e,stroke:#ef4444
+    style FUTURE fill:#1a1a2e,stroke:#10b981
+    style COPILOT fill:#3b82f6,stroke:#3b82f6,color:#fff
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Architecture -->
+        <section id="architecture">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <h2>System Architecture</h2>
+                <p class="section-desc">A layered architecture designed for non-invasive integration with existing maritime systems.</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">High-Level System Architecture</div>
+                <div class="mermaid">
+flowchart TB
+    subgraph PRESENTATION["PRESENTATION LAYER"]
+        direction LR
+        DASH["🖥️ Unified Dashboard"]
+        CHAT["💬 Conversational AI"]
+        MOBILE["📱 Mobile App"]
+        ALERTS["🔔 Alert System"]
+    end
+
+    subgraph INTELLIGENCE["INTELLIGENCE LAYER"]
+        direction LR
+        FUEL["⛽ Voyage Fuel Engine"]
+        BUNKER["💰 Bunker Decision Support"]
+        COMPLY["✓ Compliance Monitor"]
+        RECON["🔄 ROB Reconciliation"]
+        EVENT["⚡ Event Engine"]
+    end
+
+    subgraph PROCESSING["DATA PROCESSING LAYER"]
+        direction LR
+        PARSE["📧 Email Parser"]
+        NORM["🔧 Data Normalizer"]
+        STORE[("💾 Time-Series DB")]
+        CACHE[("⚡ Cache Layer")]
+    end
+
+    subgraph INTEGRATION["DATA INTEGRATION LAYER"]
+        direction LR
+        AIS_A["AIS Adapter"]
+        IMOS_A["IMOS Adapter"]
+        EMAIL_A["Email Adapter"]
+        PRICE_A["Price Feed Adapter"]
+        RIGHT_A["RightShip Adapter"]
+    end
+
+    subgraph SOURCES["EXTERNAL SYSTEMS"]
+        direction LR
+        AIS_S[("🗺️ AIS Provider")]
+        IMOS_S[("📅 IMOS")]
+        EMAIL_S[("📧 Mail Server")]
+        PRICE_S[("⛽ Price Feeds")]
+        RIGHT_S[("✓ RightShip")]
+    end
+
+    SOURCES --> INTEGRATION
+    INTEGRATION --> PROCESSING
+    PROCESSING --> INTELLIGENCE
+    INTELLIGENCE --> PRESENTATION
+
+    style PRESENTATION fill:#3b82f6,stroke:#3b82f6,color:#fff
+    style INTELLIGENCE fill:#8b5cf6,stroke:#8b5cf6,color:#fff
+    style PROCESSING fill:#06b6d4,stroke:#06b6d4,color:#fff
+    style INTEGRATION fill:#10b981,stroke:#10b981,color:#fff
+    style SOURCES fill:#1e293b,stroke:#475569,color:#fff
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Architecture Principles</h3>
+                <div class="card-grid" style="margin-top: 1.5rem;">
+                    <div class="module-card blue">
+                        <div class="module-icon">🔌</div>
+                        <div class="module-title">Non-Invasive Integration</div>
+                        <div class="module-desc">Connects to existing systems via APIs and standard protocols without requiring changes to source systems.</div>
+                    </div>
+                    <div class="module-card cyan">
+                        <div class="module-icon">⚡</div>
+                        <div class="module-title">Event-Driven Updates</div>
+                        <div class="module-desc">Changes in any source system trigger cascading recalculations automatically.</div>
+                    </div>
+                    <div class="module-card green">
+                        <div class="module-icon">🔒</div>
+                        <div class="module-title">Graceful Degradation</div>
+                        <div class="module-desc">System continues functioning when individual data sources are temporarily unavailable.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Data Flow -->
+        <section id="data-flow">
+            <div class="section-header">
+                <div class="section-number">03</div>
+                <h2>Data Flow Architecture</h2>
+                <p class="section-desc">How data moves through the system from source to decision.</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Data Ingestion & Processing Flow</div>
+                <div class="mermaid">
+flowchart LR
+    subgraph INGEST["DATA INGESTION"]
+        AIS["🗺️ AIS Feed<br/>Every 15 min"]
+        EMAIL["📧 Email<br/>Real-time"]
+        IMOS["📅 IMOS<br/>On change"]
+        PRICE["⛽ Prices<br/>Hourly"]
+        RIGHT["✓ RightShip<br/>Daily"]
+    end
+
+    subgraph PROCESS["PROCESSING"]
+        VALID["✓ Validation"]
+        PARSE["📝 Parsing"]
+        ENRICH["🔧 Enrichment"]
+    end
+
+    subgraph STORE["STORAGE"]
+        TS[("📊 Time-Series<br/>Positions, ROB")]
+        REL[("🗃️ Relational<br/>Voyages, Vessels")]
+        DOC[("📄 Document<br/>Raw Records")]
+    end
+
+    subgraph COMPUTE["COMPUTATION"]
+        FUEL["⛽ Fuel Projection"]
+        RISK["⚠️ Risk Assessment"]
+        REC["💡 Recommendations"]
+    end
+
+    AIS --> VALID
+    EMAIL --> PARSE
+    IMOS --> VALID
+    PRICE --> VALID
+    RIGHT --> VALID
+
+    VALID --> ENRICH
+    PARSE --> ENRICH
+    
+    ENRICH --> TS
+    ENRICH --> REL
+    ENRICH --> DOC
+
+    TS --> FUEL
+    REL --> FUEL
+    TS --> RISK
+    REL --> RISK
+    
+    FUEL --> REC
+    RISK --> REC
+
+    REC --> OUTPUT["🖥️ Dashboard"]
+
+    style INGEST fill:#1e293b,stroke:#475569
+    style PROCESS fill:#1e293b,stroke:#475569
+    style STORE fill:#1e293b,stroke:#475569
+    style COMPUTE fill:#1e293b,stroke:#475569
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Email Parsing Pipeline</div>
+                <div class="mermaid">
+flowchart LR
+    IN["📧 Incoming<br/>Email"] --> FILTER["🔍 Filter<br/>Master?"]
+    
+    FILTER -->|"Yes"| IDENTIFY["📋 Identify<br/>Report Type"]
+    FILTER -->|"No"| SKIP["⏭️ Skip"]
+    
+    IDENTIFY --> NLP["🤖 NLP<br/>Extraction"]
+    
+    NLP --> EXTRACT["📊 Extract:<br/>• ROB<br/>• Consumption<br/>• Position<br/>• Weather"]
+    
+    EXTRACT --> VALIDATE["✓ Validate<br/>vs Expected"]
+    
+    VALIDATE -->|"Within Tolerance"| ACCEPT["✅ Accept &<br/>Update DB"]
+    VALIDATE -->|"Variance > 5%"| FLAG["⚠️ Flag for<br/>Review"]
+    
+    ACCEPT --> UPDATE["🔄 Trigger<br/>Recalculations"]
+    FLAG --> NOTIFY["🔔 Notify<br/>Operator"]
+
+    style IN fill:#3b82f6,stroke:#3b82f6,color:#fff
+    style NLP fill:#8b5cf6,stroke:#8b5cf6,color:#fff
+    style ACCEPT fill:#10b981,stroke:#10b981,color:#fff
+    style FLAG fill:#f59e0b,stroke:#f59e0b,color:#fff
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Data Model Entities</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Entity</th>
+                            <th>Key Attributes</th>
+                            <th>Update Frequency</th>
+                            <th>Primary Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vessel</strong></td>
+                            <td>IMO, Name, Consumption Curves, Tank Capacity, Certificates</td>
+                            <td>Static / On change</td>
+                            <td>IMOS, RightShip</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Position</strong></td>
+                            <td>Lat/Long, Speed, Heading, Timestamp</td>
+                            <td>Every 15 minutes</td>
+                            <td>AIS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Voyage</strong></td>
+                            <td>Ports, ETAs, Laycans, Cargo, Status</td>
+                            <td>On change</td>
+                            <td>IMOS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fuel Event</strong></td>
+                            <td>ROB, Consumption, Bunker Delivery, Source, Timestamp</td>
+                            <td>Daily / On event</td>
+                            <td>Master Email, Parsed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bunker Price</strong></td>
+                            <td>Port, Grade, Price, Supplier, Validity</td>
+                            <td>Hourly / Daily</td>
+                            <td>Price Feeds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compliance</strong></td>
+                            <td>Certificates, CII Rating, Deficiencies, Expiries</td>
+                            <td>Daily</td>
+                            <td>RightShip</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: Core Modules -->
+        <section id="modules">
+            <div class="section-header">
+                <div class="section-number">04</div>
+                <h2>Core Functional Modules</h2>
+                <p class="section-desc">The six intelligent modules that power the Operations Copilot.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="module-card blue">
+                    <div class="module-icon">🖥️</div>
+                    <div class="module-title">Unified Dashboard</div>
+                    <div class="module-desc">Single view aggregating fleet position, fuel status, schedule, and compliance.</div>
+                    <ul class="module-features">
+                        <li>Interactive fleet map with status indicators</li>
+                        <li>Vessel summary cards with key metrics</li>
+                        <li>Voyage timeline visualization</li>
+                        <li>Real-time updates without refresh</li>
+                    </ul>
+                </div>
+
+                <div class="module-card cyan">
+                    <div class="module-icon">📧</div>
+                    <div class="module-title">Intelligent Email Parser</div>
+                    <div class="module-desc">AI-powered extraction of structured data from unstructured Master communications.</div>
+                    <ul class="module-features">
+                        <li>NLP-based noon report parsing</li>
+                        <li>Automatic ROB, consumption extraction</li>
+                        <li>Variance detection and flagging</li>
+                        <li>Learning from corrections</li>
+                    </ul>
+                </div>
+
+                <div class="module-card green">
+                    <div class="module-icon">⛽</div>
+                    <div class="module-title">Voyage Fuel Engine</div>
+                    <div class="module-desc">Dynamic fuel projection that adapts in real-time to changing voyage conditions.</div>
+                    <ul class="module-features">
+                        <li>Live fuel projections per waypoint</li>
+                        <li>Scenario modeling (speed, weather)</li>
+                        <li>Automatic bunker recommendations</li>
+                        <li>Probabilistic range estimates</li>
+                    </ul>
+                </div>
+
+                <div class="module-card amber">
+                    <div class="module-icon">💰</div>
+                    <div class="module-title">Bunker Decision Support</div>
+                    <div class="module-desc">Streamlined price discovery, comparison, and procurement execution.</div>
+                    <ul class="module-features">
+                        <li>Real-time price feeds by port</li>
+                        <li>One-click RFQ to multiple suppliers</li>
+                        <li>Automated quote comparison</li>
+                        <li>Delivery reconciliation</li>
+                    </ul>
+                </div>
+
+                <div class="module-card purple">
+                    <div class="module-icon">✓</div>
+                    <div class="module-title">Compliance Monitor</div>
+                    <div class="module-desc">Embedded compliance checks that surface issues before decisions are made.</div>
+                    <ul class="module-features">
+                        <li>Certificate expiry tracking</li>
+                        <li>CII impact calculation</li>
+                        <li>ECA fuel requirement alerts</li>
+                        <li>RightShip status integration</li>
+                    </ul>
+                </div>
+
+                <div class="module-card red">
+                    <div class="module-icon">🔄</div>
+                    <div class="module-title">ROB Reconciliation</div>
+                    <div class="module-desc">Single source of truth for fuel quantities with variance detection.</div>
+                    <ul class="module-features">
+                        <li>Multi-source ROB aggregation</li>
+                        <li>Weighted reconciliation algorithm</li>
+                        <li>Variance alerting and audit trail</li>
+                        <li>Historical accuracy profiling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Module Interaction Flow</div>
+                <div class="mermaid">
+flowchart TB
+    subgraph INPUT["DATA INPUTS"]
+        AIS["🗺️ AIS Position"]
+        EMAIL["📧 Master Email"]
+        SCHEDULE["📅 IMOS Schedule"]
+        PRICES["⛽ Bunker Prices"]
+        COMPLY["✓ RightShip"]
+    end
+
+    subgraph PROCESS["PROCESSING MODULES"]
+        PARSER["📧 Email Parser"]
+        RECON["🔄 ROB Reconciliation"]
+    end
+
+    subgraph COMPUTE["INTELLIGENCE MODULES"]
+        FUEL["⛽ Voyage Fuel Engine"]
+        BUNKER["💰 Bunker Decision"]
+        MONITOR["✓ Compliance Monitor"]
+    end
+
+    subgraph OUTPUT["OUTPUTS"]
+        DASH["🖥️ Dashboard View"]
+        ALERT["🔔 Alerts"]
+        REC["💡 Recommendations"]
+    end
+
+    EMAIL --> PARSER
+    PARSER --> RECON
+    AIS --> RECON
+    
+    RECON --> FUEL
+    SCHEDULE --> FUEL
+    AIS --> FUEL
+    
+    FUEL --> BUNKER
+    PRICES --> BUNKER
+    
+    SCHEDULE --> MONITOR
+    COMPLY --> MONITOR
+    FUEL --> MONITOR
+    
+    FUEL --> DASH
+    BUNKER --> DASH
+    MONITOR --> DASH
+    
+    FUEL --> ALERT
+    MONITOR --> ALERT
+    
+    BUNKER --> REC
+    FUEL --> REC
+
+    style PARSER fill:#06b6d4,stroke:#06b6d4,color:#fff
+    style RECON fill:#ef4444,stroke:#ef4444,color:#fff
+    style FUEL fill:#10b981,stroke:#10b981,color:#fff
+    style BUNKER fill:#f59e0b,stroke:#f59e0b,color:#fff
+    style MONITOR fill:#8b5cf6,stroke:#8b5cf6,color:#fff
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: UI Design -->
+        <section id="ui-design">
+            <div class="section-header">
+                <div class="section-number">05</div>
+                <h2>User Interface Design</h2>
+                <p class="section-desc">Intuitive interfaces designed for maritime operations professionals.</p>
+            </div>
+
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot red"></div>
+                    <div class="mockup-dot yellow"></div>
+                    <div class="mockup-dot green"></div>
+                    <span class="mockup-title">Operations Copilot — Fleet Dashboard</span>
+                </div>
+                <div class="mockup-content">
+                    <div class="dashboard-mockup">
+                        <!-- Sidebar -->
+                        <div class="sidebar">
+                            <div class="sidebar-item active">
+                                <span class="sidebar-icon">🗺️</span>
+                                Fleet Overview
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">📊</span>
+                                Voyage Analytics
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">⛽</span>
+                                Bunker Planning
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">✓</span>
+                                Compliance
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">📧</span>
+                                Communications
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">🔔</span>
+                                Alerts
+                                <span style="margin-left: auto; background: var(--accent-red); padding: 2px 8px; border-radius: 10px; font-size: 0.75rem;">3</span>
+                            </div>
+                            <div class="sidebar-item">
+                                <span class="sidebar-icon">⚙️</span>
+                                Settings
+                            </div>
+                        </div>
+
+                        <!-- Map Area -->
+                        <div class="map-area">
+                            <div class="map-placeholder"></div>
+                            <div class="vessel-marker green" style="top: 30%; left: 25%;" data-label="Pacific Star">🚢</div>
+                            <div class="vessel-marker amber" style="top: 45%; left: 55%;" data-label="Pacific Endeavor">🚢</div>
+                            <div class="vessel-marker green" style="top: 60%; left: 70%;" data-label="Atlantic Voyager">🚢</div>
+                            <div class="vessel-marker red" style="top: 25%; left: 80%;" data-label="Nordic Spirit">🚢</div>
+                            <div class="vessel-marker green" style="top: 70%; left: 35%;" data-label="Ocean Pioneer">🚢</div>
+                        </div>
+
+                        <!-- Detail Panel -->
+                        <div class="detail-panel">
+                            <div class="panel-header">
+                                <span class="vessel-name">MV Pacific Endeavor</span>
+                                <span class="vessel-status warning">ATTENTION</span>
+                            </div>
+
+                            <h4 style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">POSITION</h4>
+                            <div class="stat-row">
+                                <span class="stat-label">Location</span>
+                                <span class="stat-value">Indian Ocean</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Speed</span>
+                                <span class="stat-value">12.4 kts</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Heading</span>
+                                <span class="stat-value">SW 225°</span>
+                            </div>
+
+                            <h4 style="font-size: 0.75rem; color: var(--text-muted); margin: 1rem 0 0.5rem;">FUEL STATUS</h4>
+                            <div class="stat-row">
+                                <span class="stat-label">ROB (VLSFO)</span>
+                                <span class="stat-value">680 MT</span>
+                            </div>
+                            <div class="fuel-bar">
+                                <div class="fuel-fill medium" style="width: 68%;"></div>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Days Remaining</span>
+                                <span class="stat-value">21 days</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Consumption</span>
+                                <span class="stat-value">32 MT/day</span>
+                            </div>
+
+                            <h4 style="font-size: 0.75rem; color: var(--text-muted); margin: 1rem 0 0.5rem;">SCHEDULE</h4>
+                            <div class="stat-row">
+                                <span class="stat-label">Next Port</span>
+                                <span class="stat-value">Durban</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">ETA</span>
+                                <span class="stat-value">Feb 15, 0800</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Laycan</span>
+                                <span class="stat-value" style="color: var(--accent-green);">✓ On Track</span>
+                            </div>
+
+                            <div class="alert-badge">
+                                <span>⚠️</span>
+                                <span>Fuel insufficient for Santos without bunkering</span>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary">Bunker Inquiry</button>
+                                <button class="btn btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>UI Design Principles</h3>
+                <div class="card-grid" style="margin-top: 1.5rem;">
+                    <div>
+                        <h4>Progressive Disclosure</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9375rem;">Critical information displayed prominently with additional detail available through natural interaction. Users see summaries first and drill down only when needed.</p>
+                    </div>
+                    <div>
+                        <h4>Contextual Relevance</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9375rem;">Information and actions appropriate to the operator's current focus. When examining a vessel, irrelevant data is hidden to reduce cognitive load.</p>
+                    </div>
+                    <div>
+                        <h4>Minimal Interruption</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9375rem;">Alerts calibrated to balance timely information against distraction. System learns from operator responses to refine attention thresholds.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Dashboard Information Hierarchy</div>
+                <div class="mermaid">
+flowchart TB
+    subgraph L1["LEVEL 1: FLEET OVERVIEW"]
+        MAP["🗺️ Fleet Map<br/>All vessels, color-coded status"]
+        SUMMARY["📊 Fleet Summary<br/>Total vessels, alerts, key metrics"]
+    end
+
+    subgraph L2["LEVEL 2: VESSEL DETAIL"]
+        POSITION["📍 Position & Movement<br/>Location, speed, heading, ETA"]
+        FUEL["⛽ Fuel Status<br/>ROB, consumption, projections"]
+        SCHEDULE["📅 Schedule<br/>Ports, laycans, timeline"]
+        COMPLIANCE["✓ Compliance<br/>Certificates, CII, flags"]
+    end
+
+    subgraph L3["LEVEL 3: DEEP DIVE"]
+        VOYAGE["🚢 Full Voyage Analysis<br/>Complete route, all calculations"]
+        HISTORY["📈 Historical Data<br/>Trends, patterns, analytics"]
+        ACTIONS["⚡ Action Center<br/>RFQ, communications, decisions"]
+    end
+
+    MAP --> POSITION
+    MAP --> FUEL
+    SUMMARY --> POSITION
+    
+    POSITION --> VOYAGE
+    FUEL --> VOYAGE
+    FUEL --> ACTIONS
+    SCHEDULE --> VOYAGE
+    COMPLIANCE --> VOYAGE
+
+    style L1 fill:#3b82f6,stroke:#3b82f6
+    style L2 fill:#8b5cf6,stroke:#8b5cf6
+    style L3 fill:#06b6d4,stroke:#06b6d4
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Workflows -->
+        <section id="workflows">
+            <div class="section-header">
+                <div class="section-number">06</div>
+                <h2>User Workflows</h2>
+                <p class="section-desc">Streamlined workflows that transform hours of work into minutes of review.</p>
+            </div>
+
+            <div class="card">
+                <h3>Workflow 1: Morning Fleet Review</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Daily check of fleet status, replacing manual system-by-system review.</p>
+                
+                <div class="diagram-container" style="margin: 0;">
+                    <div class="mermaid">
+flowchart LR
+    START(("🌅 Start<br/>Day")) --> DASH["Open<br/>Dashboard"]
+    DASH --> QUEUE["Review<br/>Alert Queue"]
+    QUEUE --> CHECK{"Any<br/>Critical?"}
+    
+    CHECK -->|"Yes"| DETAIL["Open Vessel<br/>Detail"]
+    DETAIL --> ACTION["Take<br/>Action"]
+    ACTION --> QUEUE
+    
+    CHECK -->|"No"| SCAN["Scan Fleet<br/>Map"]
+    SCAN --> DONE(("✅ Review<br/>Complete"))
+
+    style START fill:#f59e0b,stroke:#f59e0b,color:#fff
+    style DONE fill:#10b981,stroke:#10b981,color:#fff
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-elevated); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                        <span style="color: var(--text-muted);">Time Before:</span>
+                        <span style="color: var(--accent-red);">45-60 minutes</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-top: 0.5rem;">
+                        <span style="color: var(--text-muted);">Time After:</span>
+                        <span style="color: var(--accent-green);">5-10 minutes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Workflow 2: Bunkering Decision</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">End-to-end bunker planning from identification through procurement.</p>
+                
+                <div class="diagram-container" style="margin: 0;">
+                    <div class="mermaid">
+flowchart TB
+    subgraph IDENTIFY["1️⃣ IDENTIFY NEED"]
+        ALERT["System Alert:<br/>Fuel Below Threshold"]
+        MANUAL["Operator:<br/>Voyage Planning"]
+    end
+
+    subgraph ANALYZE["2️⃣ ANALYZE OPTIONS"]
+        PORTS["View Viable<br/>Bunker Ports"]
+        PRICES["Compare<br/>Prices"]
+        SCHEDULE["Check Schedule<br/>Impact"]
+        COMPLY["Verify<br/>Compliance"]
+    end
+
+    subgraph DECIDE["3️⃣ DECIDE"]
+        REC["Review System<br/>Recommendation"]
+        SELECT["Select Port<br/>& Quantity"]
+    end
+
+    subgraph EXECUTE["4️⃣ EXECUTE"]
+        RFQ["Send RFQ<br/>to Suppliers"]
+        COMPARE["Compare<br/>Quotes"]
+        CONFIRM["Confirm<br/>Order"]
+        UPDATE["Update Voyage<br/>Plan"]
+    end
+
+    ALERT --> PORTS
+    MANUAL --> PORTS
+    
+    PORTS --> PRICES
+    PRICES --> SCHEDULE
+    SCHEDULE --> COMPLY
+    
+    COMPLY --> REC
+    REC --> SELECT
+    
+    SELECT --> RFQ
+    RFQ --> COMPARE
+    COMPARE --> CONFIRM
+    CONFIRM --> UPDATE
+
+    style IDENTIFY fill:#1e293b,stroke:#f59e0b
+    style ANALYZE fill:#1e293b,stroke:#3b82f6
+    style DECIDE fill:#1e293b,stroke:#8b5cf6
+    style EXECUTE fill:#1e293b,stroke:#10b981
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Workflow 3: Deviation Response</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Automated handling of schedule deviations with cascade recalculation.</p>
+                
+                <div class="diagram-container" style="margin: 0;">
+                    <div class="mermaid">
+sequenceDiagram
+    participant AIS as 🗺️ AIS System
+    participant EVENT as ⚡ Event Engine
+    participant FUEL as ⛽ Fuel Engine
+    participant COMPLY as ✓ Compliance
+    participant ALERT as 🔔 Alert System
+    participant OP as 👤 Operator
+
+    AIS->>EVENT: Position Update (Delayed)
+    EVENT->>EVENT: Detect Deviation from Plan
+    
+    EVENT->>FUEL: Trigger Recalculation
+    FUEL->>FUEL: New ETA: +2 Days
+    FUEL->>FUEL: New Fuel Projection
+    
+    EVENT->>COMPLY: Check Implications
+    COMPLY->>COMPLY: Certificate Expiry OK
+    COMPLY->>COMPLY: Laycan at Risk ⚠️
+    
+    FUEL->>ALERT: Fuel Projection Changed
+    COMPLY->>ALERT: Laycan Warning
+    
+    ALERT->>OP: Consolidated Alert:<br/>"Pacific Endeavor delayed 2 days.<br/>Laycan at risk. Fuel plan unchanged."
+    
+    OP->>OP: Review & Acknowledge
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Integration -->
+        <section id="integration">
+            <div class="section-header">
+                <div class="section-number">07</div>
+                <h2>System Integration Specifications</h2>
+                <p class="section-desc">Technical details for connecting to each source system.</p>
+            </div>
+
+            <div class="card">
+                <h3>Integration Matrix</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Protocol</th>
+                            <th>Data Elements</th>
+                            <th>Frequency</th>
+                            <th>Fallback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🗺️ AIS Provider</strong></td>
+                            <td>REST API / AIS NMEA</td>
+                            <td>Position, Speed, Heading, ETA</td>
+                            <td>Every 15 min</td>
+                            <td>Last known position + dead reckoning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📧 Mail Server</strong></td>
+                            <td>IMAP/SMTP (TLS)</td>
+                            <td>Noon reports, operational comms</td>
+                            <td>Real-time polling</td>
+                            <td>Queue for retry</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📅 IMOS</strong></td>
+                            <td>REST API / DB Read</td>
+                            <td>Voyages, Ports, Laycans, Cargo</td>
+                            <td>On change + hourly sync</td>
+                            <td>Cached voyage data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>⛽ Bunker Feeds</strong></td>
+                            <td>REST API / FTP</td>
+                            <td>Port prices, supplier info</td>
+                            <td>Hourly</td>
+                            <td>Last known prices with staleness flag</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✓ RightShip</strong></td>
+                            <td>REST API</td>
+                            <td>Safety scores, deficiencies, DOC</td>
+                            <td>Daily</td>
+                            <td>Cached compliance data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Integration Architecture Detail</div>
+                <div class="mermaid">
+flowchart TB
+    subgraph EXTERNAL["EXTERNAL SYSTEMS"]
+        AIS_EXT["🗺️ AIS Provider<br/>API Endpoint"]
+        IMOS_EXT["📅 IMOS<br/>REST API"]
+        MAIL_EXT["📧 Mail Server<br/>IMAP"]
+        BUNKER_EXT["⛽ Price Feed<br/>REST/FTP"]
+        RIGHT_EXT["✓ RightShip<br/>REST API"]
+    end
+
+    subgraph ADAPTERS["ADAPTER LAYER"]
+        AIS_AD["AIS Adapter<br/>• Poll every 15m<br/>• Validate position<br/>• Dead reckoning"]
+        IMOS_AD["IMOS Adapter<br/>• Webhook listener<br/>• Hourly sync<br/>• Conflict resolution"]
+        MAIL_AD["Email Adapter<br/>• IMAP monitor<br/>• Filter Master mails<br/>• Route to parser"]
+        BUNKER_AD["Price Adapter<br/>• Multi-source aggregation<br/>• Normalization<br/>• Currency conversion"]
+        RIGHT_AD["RightShip Adapter<br/>• Daily pull<br/>• Deficiency tracking<br/>• Score history"]
+    end
+
+    subgraph QUEUE["MESSAGE QUEUE"]
+        MQ["📨 Event Queue<br/>• Ordered delivery<br/>• Retry logic<br/>• Dead letter handling"]
+    end
+
+    subgraph PROCESS["PROCESSING"]
+        HANDLER["Event Handler<br/>Route to appropriate processor"]
+    end
+
+    AIS_EXT --> AIS_AD
+    IMOS_EXT --> IMOS_AD
+    MAIL_EXT --> MAIL_AD
+    BUNKER_EXT --> BUNKER_AD
+    RIGHT_EXT --> RIGHT_AD
+
+    AIS_AD --> MQ
+    IMOS_AD --> MQ
+    MAIL_AD --> MQ
+    BUNKER_AD --> MQ
+    RIGHT_AD --> MQ
+
+    MQ --> HANDLER
+
+    style EXTERNAL fill:#1e293b,stroke:#475569
+    style ADAPTERS fill:#1e293b,stroke:#3b82f6
+    style QUEUE fill:#1e293b,stroke:#8b5cf6
+    style PROCESS fill:#1e293b,stroke:#10b981
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Sample API Contracts</h3>
+                
+                <h4 style="margin-top: 1rem;">Vessel Position Event</h4>
+                <div class="code-block">
+<span class="code-comment">// AIS Position Event Payload</span>
+{
+  <span class="code-key">"event_type"</span>: <span class="code-value">"position_update"</span>,
+  <span class="code-key">"vessel_imo"</span>: <span class="code-value">"9876543"</span>,
+  <span class="code-key">"timestamp"</span>: <span class="code-value">"2024-02-01T12:00:00Z"</span>,
+  <span class="code-key">"position"</span>: {
+    <span class="code-key">"latitude"</span>: <span class="code-value">-15.4321</span>,
+    <span class="code-key">"longitude"</span>: <span class="code-value">48.7654</span>
+  },
+  <span class="code-key">"speed_knots"</span>: <span class="code-value">12.4</span>,
+  <span class="code-key">"heading_degrees"</span>: <span class="code-value">225</span>,
+  <span class="code-key">"source"</span>: <span class="code-value">"terrestrial"</span>
+}
+                </div>
+
+                <h4 style="margin-top: 1.5rem;">Parsed Noon Report Event</h4>
+                <div class="code-block">
+<span class="code-comment">// Parsed Email Event Payload</span>
+{
+  <span class="code-key">"event_type"</span>: <span class="code-value">"noon_report"</span>,
+  <span class="code-key">"vessel_imo"</span>: <span class="code-value">"9876543"</span>,
+  <span class="code-key">"report_timestamp"</span>: <span class="code-value">"2024-02-01T12:00:00Z"</span>,
+  <span class="code-key">"rob"</span>: {
+    <span class="code-key">"vlsfo_mt"</span>: <span class="code-value">680</span>,
+    <span class="code-key">"mgo_mt"</span>: <span class="code-value">45</span>
+  },
+  <span class="code-key">"consumption_24h"</span>: {
+    <span class="code-key">"vlsfo_mt"</span>: <span class="code-value">32</span>,
+    <span class="code-key">"mgo_mt"</span>: <span class="code-value">0.5</span>
+  },
+  <span class="code-key">"weather"</span>: <span class="code-value">"Moderate seas, SW swell"</span>,
+  <span class="code-key">"parsing_confidence"</span>: <span class="code-value">0.95</span>,
+  <span class="code-key">"source_email_id"</span>: <span class="code-value">"msg-12345"</span>
+}
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Implementation -->
+        <section id="implementation">
+            <div class="section-header">
+                <div class="section-number">08</div>
+                <h2>Implementation Roadmap</h2>
+                <p class="section-desc">Phased approach to deliver value quickly while managing risk.</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Implementation Phases</div>
+                <div class="mermaid">
+gantt
+    title Operations Copilot Implementation
+    dateFormat  YYYY-MM-DD
+    section Phase 1
+    Integration Layer Setup           :p1a, 2024-01-01, 4w
+    Unified Dashboard (Basic)         :p1b, after p1a, 4w
+    AIS + IMOS + RightShip Connect   :p1c, after p1a, 3w
+    Pilot Testing                     :p1d, after p1b, 2w
+    section Phase 2
+    Email Parser Development          :p2a, after p1d, 6w
+    ROB Reconciliation Engine         :p2b, after p1d, 4w
+    Parser Tuning with Pilot Group    :p2c, after p2a, 3w
+    section Phase 3
+    Voyage Fuel Engine                :p3a, after p2c, 6w
+    Bunker Decision Support           :p3b, after p2c, 5w
+    Price Feed Integration            :p3c, after p2c, 3w
+    section Phase 4
+    Compliance Monitor                :p4a, after p3a, 4w
+    Conversational Interface          :p4b, after p3a, 5w
+    Analytics & Reporting             :p4c, after p3b, 4w
+    section Rollout
+    Full Fleet Deployment             :r1, after p4c, 4w
+    Training & Change Management      :r2, after p4a, 6w
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Phase 1: Foundation</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 1rem;">Establish integration layer and basic unified view.</p>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Deploy Integration Adapters</div>
+                                <div class="step-desc">Connect AIS, IMOS, RightShip without changes to source systems.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Launch Basic Dashboard</div>
+                                <div class="step-desc">Fleet map with consolidated vessel data from connected sources.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Pilot with Select Operators</div>
+                                <div class="step-desc">Validate data quality and gather feedback for refinement.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(59, 130, 246, 0.1); border-radius: 8px; font-size: 0.875rem;">
+                        <strong>Deliverable:</strong> Operators see all vessels in one view—immediate time savings.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Phase 2: Automation</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 1rem;">Automate manual data extraction and reconciliation.</p>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Deploy Email Parser</div>
+                                <div class="step-desc">AI-powered extraction of noon reports into structured data.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Enable ROB Reconciliation</div>
+                                <div class="step-desc">Single source of truth with variance alerting.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Tune with Pilot Feedback</div>
+                                <div class="step-desc">Refine parsing accuracy based on real communication patterns.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(6, 182, 212, 0.1); border-radius: 8px; font-size: 0.875rem;">
+                        <strong>Deliverable:</strong> No more manual data entry—fuel status auto-populated.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Phase 3: Intelligence</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 1rem;">Enable proactive decision support and recommendations.</p>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Launch Voyage Fuel Engine</div>
+                                <div class="step-desc">Dynamic projections that adapt to changing conditions.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Integrate Price Feeds</div>
+                                <div class="step-desc">Real-time bunker prices across viable ports.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Enable Bunker Decision Support</div>
+                                <div class="step-desc">Automated recommendations with one-click RFQ.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; font-size: 0.875rem;">
+                        <strong>Deliverable:</strong> System tells you when and where to bunker.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Phase 4: Optimization</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 1rem;">Complete the platform with advanced features.</p>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Compliance Integration</div>
+                                <div class="step-desc">Embedded CII, certificate, and ECA checks.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Conversational Interface</div>
+                                <div class="step-desc">Natural language queries for rapid information access.</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Analytics Dashboard</div>
+                                <div class="step-desc">Historical analysis for continuous improvement.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px; font-size: 0.875rem;">
+                        <strong>Deliverable:</strong> Complete intelligent operations platform.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Expected Outcomes</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Before</th>
+                            <th>After</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Morning fleet review time</td>
+                            <td>45-60 min</td>
+                            <td>5-10 min</td>
+                            <td style="color: var(--accent-green);">85% reduction</td>
+                        </tr>
+                        <tr>
+                            <td>Bunkering decision cycle</td>
+                            <td>4-8 hours</td>
+                            <td>30-60 min</td>
+                            <td style="color: var(--accent-green);">90% reduction</td>
+                        </tr>
+                        <tr>
+                            <td>Data entry errors</td>
+                            <td>~5% of reports</td>
+                            <td>&lt;0.5% flagged variance</td>
+                            <td style="color: var(--accent-green);">90% reduction</td>
+                        </tr>
+                        <tr>
+                            <td>Missed noon reports</td>
+                            <td>2-3 per week</td>
+                            <td>0 (auto-flagged)</td>
+                            <td style="color: var(--accent-green);">100% visibility</td>
+                        </tr>
+                        <tr>
+                            <td>Bunker cost optimization</td>
+                            <td>Manual comparison</td>
+                            <td>System-optimized</td>
+                            <td style="color: var(--accent-green);">$3-8/MT savings</td>
+                        </tr>
+                        <tr>
+                            <td>Compliance oversights</td>
+                            <td>Discovered late</td>
+                            <td>Proactive alerts</td>
+                            <td style="color: var(--accent-green);">Near-zero incidents</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 3rem 0; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+            <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+                <div class="logo-icon" style="width: 32px; height: 32px; font-size: 16px;">⚓</div>
+                <span class="logo-text" style="font-size: 1.125rem;">Operations Copilot</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                Digital Solution Design Document<br>
+                Integrated Voyage Management System
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#3b82f6',
+                primaryTextColor: '#f1f5f9',
+                primaryBorderColor: '#3b82f6',
+                lineColor: '#475569',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#0f172a',
+                background: '#111827',
+                mainBkg: '#1e293b',
+                nodeBorder: '#475569',
+                clusterBkg: '#1e293b',
+                clusterBorder: '#475569',
+                titleColor: '#f1f5f9',
+                edgeLabelBackground: '#1e293b',
+                fontFamily: 'DM Sans, sans-serif'
+            },
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            },
+            sequence: {
+                actorMargin: 50,
+                messageMargin: 40
+            },
+            gantt: {
+                barHeight: 30,
+                barGap: 8,
+                topPadding: 50,
+                leftPadding: 75,
+                gridLineStartPadding: 35,
+                fontSize: 12,
+                sectionFontSize: 14
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
